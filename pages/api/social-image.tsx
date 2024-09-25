@@ -56,7 +56,7 @@ export default async function OGImage(req: NextRequest) {
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: '"Inter", sans-serif',
-          color: 'black'
+          color: 'white'
         }}
       >
         {pageInfo.image && (
@@ -103,11 +103,10 @@ export default async function OGImage(req: NextRequest) {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
-              backgroundColor: '#fff',
+              background: 'linear-gradient(to bottom, lightblue, black)',
               padding: 24,
               alignItems: 'center',
-              textAlign: 'center'
-            }}
+              textAlign: 'center'            }}
           >
             {pageInfo.detail && (
               <div style={{ fontSize: 32, opacity: 0 }}>{pageInfo.detail}</div>
@@ -115,7 +114,7 @@ export default async function OGImage(req: NextRequest) {
 
             <div
               style={{
-                fontSize: 70,
+                fontSize: 56,
                 fontWeight: 700,
                 fontFamily: 'Inter'
               }}
