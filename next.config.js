@@ -24,7 +24,9 @@ module.exports = withBundleAnalyzer({
     const sources = ['/', '/:path']
     return sources.map((s) => ({
       source: s,
-      destination: `${process.env.ROOT_URL}/blog${s === '/' ? '' : s}`,
+      destination: `${process.env.ROOT_URL || 'https://bask.health'}/blog${
+        s === '/' ? '' : s
+      }`,
       has: [
         {
           type: 'host',
