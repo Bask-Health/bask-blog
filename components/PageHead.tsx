@@ -92,6 +92,12 @@ export const PageHead: React.FC<
       <meta name="twitter:label2" content="Est. reading time" />
       <meta name="twitter:data2" content="14 minutes" />
 
+      <meta name='author' content='Bask Health Team' />
+      <meta name="twitter:label1" content="Written by" />
+      <meta name="twitter:data1" content="Bask Health Team" />
+      <meta name="twitter:label2" content="Est. reading time" />
+      <meta name="twitter:data2" content="14 minutes" />
+
     </Head>
   )
 }
