@@ -15,10 +15,10 @@ export const mapPageUrl =
     const pageUuid = parsePageId(pageId, { uuid: true })
 
     if (uuidToId(pageUuid) === site.rootNotionPageId) {
-      return createUrl('/', searchParams)
+      return createUrl('/blog', searchParams)
     } else {
       return createUrl(
-        `/${getCanonicalPageId(pageUuid, recordMap, { uuid })}`,
+        `/blog/${getCanonicalPageId(pageUuid, recordMap, { uuid })}`,
         searchParams
       )
     }
@@ -30,11 +30,13 @@ export const getCanonicalPageUrl =
     const pageUuid = parsePageId(pageId, { uuid: true })
 
     if (uuidToId(pageId) === site.rootNotionPageId) {
-      return `https://${site.domain}`
+      return `https://${site.domain}/blog`
     } else {
-      return `https://${site.domain}/${getCanonicalPageId(pageUuid, recordMap, {
-        uuid
-      })}`
+      return `https://${site.domain}/blog/${getCanonicalPageId(
+        pageUuid,
+        recordMap,
+        { uuid }
+      )}`
     }
   }
 
