@@ -24,7 +24,10 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/:path*',
-        headers: [{ key: 'X-Test-Header', value: 'OVERRIDEME' }]
+        headers: [
+          { key: 'X-Test-Header', value: 'OVERRIDEME' },
+          { key: 'X-Test-Header-2', value: 'dont-OVERRIDEME' }
+        ]
       }
     ]
   },
