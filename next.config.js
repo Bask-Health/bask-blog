@@ -20,6 +20,14 @@ module.exports = withBundleAnalyzer({
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
   basePath: '/blog',
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [{ key: 'X-Test-Header', value: 'OVERRIDEME' }]
+      }
+    ]
+  },
   async redirects() {
     const sources = ['/', '/:path']
     return sources.map((s) => ({
