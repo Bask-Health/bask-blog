@@ -38,17 +38,14 @@ const createSitemap = (siteMap: SiteMap) => {
     <url>
       <loc>${host}/blog</loc>
       <changefreq>daily</changefreq>
-      <lastmod>${currentDate}</lastmod>
     </url>
 
     <url>
       <loc>${host}/blog/</loc>
-      <lastmod>${currentDate}</lastmod>
     </url>
 
     ${Object.keys(siteMap.canonicalPageMap)
       .map((canonicalPagePath) => {
-        const pageId = siteMap.canonicalPageMap[canonicalPagePath]
         const lastMod = siteMap.pageModDates[canonicalPagePath] || currentDate
         return `
           <url>
