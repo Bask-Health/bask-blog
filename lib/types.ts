@@ -45,6 +45,7 @@ export interface SiteMap {
   site: Site
   pageMap: PageMap
   canonicalPageMap: CanonicalPageMap
+  pageModDates: Record<string, string> 
 }
 
 export interface CanonicalPageMap {

@@ -1,5 +1,4 @@
 import type { GetServerSideProps } from 'next'
-
 import { host } from '@/lib/config'
 import { getSiteMap } from '@/lib/get-site-map'
 import type { SiteMap } from '@/lib/types'
@@ -31,27 +30,37 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 }
 
-const createSitemap = (siteMap: SiteMap) =>
-  `<?xml version="1.0" encoding="UTF-8"?>
+const createSitemap = (siteMap: SiteMap) => {
+  const currentDate = new Date().toISOString()
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
       <loc>${host}/blog</loc>
+      <changefreq>daily</changefreq>
+      <lastmod>${currentDate}</lastmod>
     </url>
 
     <url>
       <loc>${host}/blog/</loc>
+      <lastmod>${currentDate}</lastmod>
     </url>
 
     ${Object.keys(siteMap.canonicalPageMap)
-      .map((canonicalPagePath) =>
-        `
+      .map((canonicalPagePath) => {
+        const pageId = siteMap.canonicalPageMap[canonicalPagePath]
+        const lastMod = siteMap.pageModDates[canonicalPagePath] || currentDate
+        return `
           <url>
             <loc>${host}/blog/${canonicalPagePath}</loc>
+            <lastmod>${lastMod}</lastmod>
           </url>
         `.trim()
-      )
+      })
       .join('')}
-  </urlset>
-`
+  </urlset>`
+}
 
-export default () => null
+export default function Sitemap() {
+  return null
+}

@@ -40,39 +40,39 @@ async function getAllPagesImpl(
     getPage
   )
 
-  const canonicalPageMap = Object.keys(pageMap).reduce(
-    (map, pageId: string) => {
-      const recordMap = pageMap[pageId]
-      if (!recordMap) {
-        throw new Error(`Error loading page "${pageId}"`)
-      }
+  const canonicalPageMap = {}
+  const pageModDates = {}
 
-      const canonicalPageId = getCanonicalPageId(pageId, recordMap, {
-        uuid
+  Object.keys(pageMap).forEach((pageId: string) => {
+    const recordMap = pageMap[pageId]
+    if (!recordMap) {
+      throw new Error(`Error loading page "${pageId}"`)
+    }
+
+    const canonicalPageId = getCanonicalPageId(pageId, recordMap, {
+      uuid
+    })
+
+    if (canonicalPageMap[canonicalPageId]) {
+      console.warn('error duplicate canonical page id', {
+        canonicalPageId,
+        pageId,
+        existingPageId: canonicalPageMap[canonicalPageId]
       })
-
-      if (map[canonicalPageId]) {
-        // you can have multiple pages in different collections that have the same id
-        // TODO: we may want to error if neither entry is a collection page
-        console.warn('error duplicate canonical page id', {
-          canonicalPageId,
-          pageId,
-          existingPageId: map[canonicalPageId]
-        })
-
-        return map
-      } else {
-        return {
-          ...map,
-          [canonicalPageId]: pageId
-        }
+    } else {
+      canonicalPageMap[canonicalPageId] = pageId
+      
+      // Extract the last modified date from the recordMap
+      const lastEditedTime = recordMap.block[pageId]?.value?.last_edited_time
+      if (lastEditedTime) {
+        pageModDates[canonicalPageId] = new Date(lastEditedTime).toISOString()
       }
-    },
-    {}
-  )
+    }
+  })
 
   return {
     pageMap,
-    canonicalPageMap
+    canonicalPageMap,
+    pageModDates
   }
 }
