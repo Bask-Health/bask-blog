@@ -42,4 +42,6 @@ Sitemap: ${host}/blog/sitemap.xml
   }
 }
 
-export default () => null
+export default function noop() {
+  return null
+}

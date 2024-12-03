@@ -1,21 +1,23 @@
-import * as React from 'react'
 import Head from 'next/head'
 
+import type * as types from '@/lib/types'
 import * as config from '@/lib/config'
-import * as types from '@/lib/types'
 import { getSocialImageUrl } from '@/lib/get-social-image-url'
 
-export const PageHead: React.FC<
-  types.PageProps & {
-    title?: string
-    description?: string
-    image?: string
-    url?: string
-    datePub?: Date
-    dateMod?: Date
-  }
-> = ({ site, title, description, pageId, image, url, datePub, dateMod }) => {
-  const rssFeedUrl = `${config.host}/blog/feed`
+export function PageHead({
+  site,
+  title,
+  description,
+  pageId,
+  image,
+  url
+}: types.PageProps & {
+  title?: string
+  description?: string
+  image?: string
+  url?: string
+}) {
+  const rssFeedUrl = `${config.host}/feed`
 
   title = title ?? site?.name
   description = description ?? site?.description
@@ -28,17 +30,41 @@ export const PageHead: React.FC<
       <meta httpEquiv='Content-Type' content='text/html; charset=utf-8' />
       <meta
         name='viewport'
-        content='width=device-width, initial-scale=1, shrink-to-fit=no'
+        content='width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover'
+      />
+
+      <meta name='apple-mobile-web-app-capable' content='yes' />
+      <meta name='apple-mobile-web-app-status-bar-style' content='black' />
+
+      <meta
+        name='theme-color'
+        media='(prefers-color-scheme: light)'
+        content='#fefffe'
+        key='theme-color-light'
+      />
+      <meta
+        name='theme-color'
+        media='(prefers-color-scheme: dark)'
+        content='#2d3439'
+        key='theme-color-dark'
       />
 
       <meta name='robots' content='index,follow' />
       <meta property='og:type' content='article' />
-      <meta property="og:locale" content="en_US" />
+      <meta property='og:locale' content='en_US' />
       <title>{title}</title>
-      {datePub &&
-        <meta property='article:published_time' content={datePub.toISOString()} />}
-      {dateMod &&
-        <meta property='article:modified_time' content={dateMod.toISOString()} />}
+      {datePub && (
+        <meta
+          property='article:published_time'
+          content={datePub.toISOString()}
+        />
+      )}
+      {dateMod && (
+        <meta
+          property='article:modified_time'
+          content={dateMod.toISOString()}
+        />
+      )}
 
       {site && (
         <>
@@ -87,11 +113,10 @@ export const PageHead: React.FC<
       <meta property='og:title' content={title} />
       <meta name='twitter:title' content={title} />
       <meta name='author' content='Bask Health Team' />
-      <meta name="twitter:label1" content="Written by" />
-      <meta name="twitter:data1" content="Bask Health Team" />
-      <meta name="twitter:label2" content="Est. reading time" />
-      <meta name="twitter:data2" content="14 minutes" />
-
+      <meta name='twitter:label1' content='Written by' />
+      <meta name='twitter:data1' content='Bask Health Team' />
+      <meta name='twitter:label2' content='Est. reading time' />
+      <meta name='twitter:data2' content='14 minutes' />
     </Head>
   )
 }
