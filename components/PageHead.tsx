@@ -10,7 +10,9 @@ export function PageHead({
   description,
   pageId,
   image,
-  url
+  url,
+  datePub,
+  dateMod
 }: types.PageProps & {
   title?: string
   description?: string
